@@ -6,6 +6,7 @@
 import argparse
 import errno
 import json
+import os
 import sys
 
 from .mqtthelper import Config, publish_info
@@ -49,6 +50,9 @@ def main():
         else:
             print(msg, file=sys.stderr)
         sys.exit(1)
+
+    if not os.path.exists(args.sg):
+        _print_error_msg(f"sg device {args.sg} does not exist. Make sure the path exists and a full path is provided.")
 
     try:
         ctl = autoselect_driver(args.sg)
